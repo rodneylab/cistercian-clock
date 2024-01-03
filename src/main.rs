@@ -1,21 +1,34 @@
 #![warn(clippy::all, rust_2018_idioms)]
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")] // hide console window on Windows in release
 
+use egui::IconData;
+
 // When compiling natively:
 #[cfg(not(target_arch = "wasm32"))]
 fn main() -> eframe::Result<()> {
     env_logger::init(); // Log to stderr (if you run with `RUST_LOG=debug`).
 
+    let icon_image = image::open("assets/icon-256.png").unwrap();
+    let width = icon_image.width();
+    let height = icon_image.height();
+    let icon_rgba8 = icon_image.into_rgba8().to_vec();
+    let icon_data = IconData {
+        rgba: icon_rgba8,
+        width,
+        height,
+    };
+
     let native_options = eframe::NativeOptions {
         viewport: egui::ViewportBuilder::default()
-            .with_inner_size([400.0, 300.0])
-            .with_min_inner_size([300.0, 220.0]),
+            .with_inner_size([750.0, 600.0])
+            .with_min_inner_size([750.0, 600.0])
+            .with_icon(icon_data),
         ..Default::default()
     };
     eframe::run_native(
-        "eframe template",
+        "Cistercian Clock",
         native_options,
-        Box::new(|cc| Box::new(eframe_template::TemplateApp::new(cc))),
+        Box::new(|cc| Box::new(cistercian_clock::CistercianClockApp::new(cc))),
     )
 }
 
@@ -32,7 +45,7 @@ fn main() {
             .start(
                 "the_canvas_id", // hardcode it
                 web_options,
-                Box::new(|cc| Box::new(eframe_template::TemplateApp::new(cc))),
+                Box::new(|cc| Box::new(cistercian_clock::CistercianClockApp::new(cc))),
             )
             .await
             .expect("failed to start eframe");
