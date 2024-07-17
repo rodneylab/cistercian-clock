@@ -46,7 +46,7 @@ fn main() {
             .start(
                 "the_canvas_id", // hardcode it
                 web_options,
-                Box::new(|cc| Box::new(cistercian_clock::CistercianClockApp::new(cc))),
+                Box::new(|cc| Ok(Box::new(cistercian_clock::CistercianClockApp::new(cc)))),
             )
             .await
             .expect("failed to start eframe");
