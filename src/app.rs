@@ -3,7 +3,7 @@ use core::time::Duration;
 use egui::{
     epaint::Shadow,
     scroll_area::ScrollBarVisibility,
-    style::{HandleShape, Selection, Widgets},
+    style::{HandleShape, NumericColorSpace, Selection, TextCursorStyle, Widgets},
     vec2, Color32,
     FontFamily::Proportional,
     FontId, Painter, Pos2, Rounding, ScrollArea, Sense, Stroke,
@@ -14,7 +14,6 @@ use egui::{
 fn dark_mode_override() -> Visuals {
     Visuals {
         dark_mode: true,
-        //override_text_color: None,
         override_text_color: Some(Color32::from_gray(252)),
         widgets: Widgets::default(),
         selection: Selection::default(),
@@ -26,20 +25,28 @@ fn dark_mode_override() -> Visuals {
         error_fg_color: Color32::from_rgb(255, 0, 0),  // red
 
         window_rounding: Rounding::same(6.0),
-        window_shadow: Shadow::big_dark(),
-        //window_fill: Color32::from_gray(27),
+        window_shadow: Shadow {
+            offset: vec2(10.0, 20.0),
+            blur: 15.0,
+            spread: 0.0,
+            color: Color32::from_black_alpha(96),
+        },
         window_fill: Color32::from_rgb(23, 18, 25),
         window_stroke: Stroke::new(1.0, Color32::from_gray(60)),
+        window_highlight_topmost: true,
 
         menu_rounding: Rounding::same(6.0),
 
-        //panel_fill: Color32::from_gray(27),
         panel_fill: Color32::from_rgb(23, 18, 25),
 
-        popup_shadow: Shadow::small_dark(),
+        popup_shadow: Shadow {
+            offset: vec2(10.0, 20.0),
+            blur: 15.0,
+            spread: 0.0,
+            color: Color32::from_black_alpha(96),
+        },
         resize_corner_size: 12.0,
-        text_cursor: Stroke::new(2.0, Color32::from_rgb(192, 222, 255)),
-        text_cursor_preview: false,
+        text_cursor: Default::default(),
         clip_rect_margin: 3.0, // should be at least half the size of the widest frame stroke + max WidgetVisuals::expansion
         button_frame: true,
         collapsing_header_frame: false,
@@ -54,6 +61,8 @@ fn dark_mode_override() -> Visuals {
         interact_cursor: None,
 
         image_loading_spinners: true,
+
+        numeric_color_space: NumericColorSpace::GammaByte,
     }
 }
 
@@ -62,7 +71,6 @@ pub fn light_mode_override() -> Visuals {
         dark_mode: false,
         override_text_color: Some(Color32::from_rgb(4, 3, 15)),
         widgets: Widgets::light(),
-        //selection: Selection::light(),
         selection: Selection::default(),
         hyperlink_color: Color32::from_rgb(0, 155, 255),
         faint_bg_color: Color32::from_additive_luminance(5), // visible, but barely so
@@ -71,14 +79,27 @@ pub fn light_mode_override() -> Visuals {
         warn_fg_color: Color32::from_rgb(255, 100, 0), // slightly orange red. it's difficult to find a warning color that pops on bright background.
         error_fg_color: Color32::from_rgb(255, 0, 0),  // red
 
-        window_shadow: Shadow::big_light(),
+        window_shadow: Shadow {
+            offset: vec2(10.0, 20.0),
+            blur: 15.0,
+            spread: 0.0,
+            color: Color32::from_black_alpha(25),
+        },
         window_fill: Color32::from_gray(255),
         window_stroke: Stroke::new(1.0, Color32::from_gray(190)),
 
         panel_fill: Color32::from_gray(255),
 
-        popup_shadow: Shadow::small_light(),
-        text_cursor: Stroke::new(2.0, Color32::from_rgb(0, 83, 125)),
+        popup_shadow: Shadow {
+            offset: vec2(6.0, 10.0),
+            blur: 8.0,
+            spread: 0.0,
+            color: Color32::from_black_alpha(25),
+        },
+        text_cursor: TextCursorStyle {
+            stroke: Stroke::new(2.0, Color32::from_rgb(0, 83, 125)),
+            ..Default::default()
+        },
         ..Visuals::dark()
     }
 }

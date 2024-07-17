@@ -3,17 +3,17 @@ name = "cistercian_clock"
 version = "0.1.0"
 authors = ["Rodney Johnson <ask@rondeylab.com>"]
 edition = "2021"
-rust-version = "1.72"
+rust-version = "1.76"
 
 [dependencies]
-chrono = "0.4.31"
-eframe = { version = "0.24.1", default-features = false, features = ["accesskit", # Make egui comptaible with screen readers. NOTE: adds a lot of dependencies.
+chrono = "0.4.38"
+eframe = { version = "0.28", default-features = false, features = ["accesskit", # Make egui comptaible with screen readers. NOTE: adds a lot of dependencies.
   "default_fonts", # Embed the default egui fonts.
   "glow", # Use the glow rendering backend. Alternative: "wgpu".
   "persistence", # Enable restoring app state when restarting the app.
 ] }
-egui = "0.24.1"
-image = { version = "0.24.7", default-features = false }
+egui = "0.28"
+image = { version = "0.25.1", default-features = false, features = ["png"] }
 log = "0.4"
 
 # You only need serde if you want app persistence:
@@ -21,7 +21,7 @@ serde = { version = "1", features = ["derive"] }
 
 # native:
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
-env_logger = "0.10"
+env_logger = "0.11"
 
 # web:
 [target.'cfg(target_arch = "wasm32")'.dependencies]
