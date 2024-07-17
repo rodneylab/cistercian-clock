@@ -8,7 +8,8 @@ use egui::IconData;
 fn main() -> eframe::Result<()> {
     env_logger::init(); // Log to stderr (if you run with `RUST_LOG=debug`).
 
-    let icon_image = image::open("assets/icon-256.png").unwrap();
+    let icon_image =
+        image::open("assets/icon-256.png").expect("Should be able to open icon PNG file");
     let width = icon_image.width();
     let height = icon_image.height();
     let icon_rgba8 = icon_image.into_rgba8().to_vec();
@@ -28,7 +29,7 @@ fn main() -> eframe::Result<()> {
     eframe::run_native(
         "Cistercian Clock",
         native_options,
-        Box::new(|cc| Box::new(cistercian_clock::CistercianClockApp::new(cc))),
+        Box::new(|cc| Ok(Box::new(cistercian_clock::CistercianClockApp::new(cc)))),
     )
 }
 
