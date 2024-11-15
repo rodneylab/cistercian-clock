@@ -7,25 +7,26 @@ rust-version = "1.76"
 
 [dependencies]
 chrono = "0.4.38"
-eframe = { version = "0.28", default-features = false, features = ["accesskit", # Make egui comptaible with screen readers. NOTE: adds a lot of dependencies.
+eframe = { version = "0.29", default-features = false, features = ["accesskit", # Make egui comptaible with screen readers. NOTE: adds a lot of dependencies.
   "default_fonts", # Embed the default egui fonts.
   "glow", # Use the glow rendering backend. Alternative: "wgpu".
   "persistence", # Enable restoring app state when restarting the app.
 ] }
-egui = "0.28"
-image = { version = "0.25.1", default-features = false, features = ["png"] }
-log = "0.4"
+egui = "0.29"
+image = { version = "0.25.5", default-features = false, features = ["png"] }
+log = "0.4.22"
 
 # You only need serde if you want app persistence:
-serde = { version = "1", features = ["derive"] }
+serde = { version = "1.0.215", features = ["derive"] }
 
 # native:
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
-env_logger = "0.11"
+env_logger = "0.11.5"
 
 # web:
 [target.'cfg(target_arch = "wasm32")'.dependencies]
 wasm-bindgen-futures = "0.4"
+web-sys = "0.3.70" # to access the DOM (to hide the loading text)
 
 [profile.release]
 opt-level = 2 # fast and small wasm
