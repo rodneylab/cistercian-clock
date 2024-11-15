@@ -448,14 +448,11 @@ fn paint_number(
 ) {
     let scale = if let Some(value) = scale { value } else { 1.0 };
     assert!((0..=9_999).contains(&number));
-    match show_arabic_numeral {
-        Some(true) => {
-            match number {
-                0..=999 => ui.label(number.to_string()),
-                _ => ui.label(format!("{},{:003}", number / 1000, number % 1000)),
-            };
-        }
-        None | Some(false) => {}
+    if let Some(true) = show_arabic_numeral {
+        match number {
+            0..=999 => ui.label(number.to_string()),
+            _ => ui.label(format!("{},{:003}", number / 1000, number % 1000)),
+        };
     }
 
     let size = Vec2::splat(scale * 34.0);
@@ -516,18 +513,6 @@ impl eframe::App for CistercianClockApp {
         // Put your widgets into a `SidePanel`, `TopPanel`, `CentralPanel`, `Window` or `Area`.
         // For inspiration and more examples, go to https://emilk.github.io/egui
 
-        let mut style = (*ctx.style()).clone();
-        style.text_styles = [
-            (Heading, FontId::new(30.0, Proportional)),
-            (Name("clock".into()), FontId::new(64.0, Proportional)),
-            (Body, FontId::new(18.0, Proportional)),
-            (Monospace, FontId::new(14.0, Proportional)),
-            (Button, FontId::new(14.0, Proportional)),
-            (Small, FontId::new(10.0, Proportional)),
-        ]
-        .into();
-        ctx.set_style(style);
-
         egui::TopBottomPanel::top("top_panel").show(ctx, |ui| {
             if ui.visuals().dark_mode {
                 ctx.set_visuals(dark_mode_override());
@@ -549,9 +534,21 @@ impl eframe::App for CistercianClockApp {
                     ui.add_space(16.0);
                 }
 
-                egui::widgets::global_dark_light_mode_switch(ui);
+                egui::widgets::global_theme_preference_switch(ui);
             });
         });
+
+        let mut style = (*ctx.style()).clone();
+        style.text_styles = [
+            (Heading, FontId::new(30.0, Proportional)),
+            (Name("clock".into()), FontId::new(64.0, Proportional)),
+            (Body, FontId::new(18.0, Proportional)),
+            (Monospace, FontId::new(14.0, Proportional)),
+            (Button, FontId::new(14.0, Proportional)),
+            (Small, FontId::new(10.0, Proportional)),
+        ]
+        .into();
+        ctx.set_style(style);
 
         egui::CentralPanel::default().show(ctx, |ui| {
             let colours = if ui.visuals().dark_mode {
