@@ -448,14 +448,11 @@ fn paint_number(
 ) {
     let scale = if let Some(value) = scale { value } else { 1.0 };
     assert!((0..=9_999).contains(&number));
-    match show_arabic_numeral {
-        Some(true) => {
-            match number {
-                0..=999 => ui.label(number.to_string()),
-                _ => ui.label(format!("{},{:003}", number / 1000, number % 1000)),
-            };
-        }
-        None | Some(false) => {}
+    if let Some(true) = show_arabic_numeral {
+        match number {
+            0..=999 => ui.label(number.to_string()),
+            _ => ui.label(format!("{},{:003}", number / 1000, number % 1000)),
+        };
     }
 
     let size = Vec2::splat(scale * 34.0);
