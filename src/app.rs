@@ -446,7 +446,7 @@ fn paint_number(
     scale: Option<f32>,
     show_arabic_numeral: Option<bool>,
 ) {
-    let scale = if let Some(value) = scale { value } else { 1.0 };
+    let scale = scale.unwrap_or(1.0);
     assert!((0..=9_999).contains(&number));
     if let Some(true) = show_arabic_numeral {
         match number {
