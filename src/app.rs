@@ -4,9 +4,9 @@ use egui::{
     epaint::Shadow,
     scroll_area::ScrollBarVisibility,
     style::{HandleShape, NumericColorSpace, Selection, TextCursorStyle, Widgets},
-    vec2, Color32,
+    vec2, Color32, CornerRadius,
     FontFamily::Proportional,
-    FontId, Painter, Pos2, Rounding, ScrollArea, Sense, Stroke,
+    FontId, Painter, Pos2, ScrollArea, Sense, Stroke,
     TextStyle::{self, Body, Button, Heading, Monospace, Name, Small},
     Ui, Vec2, Visuals,
 };
@@ -24,25 +24,25 @@ fn dark_mode_override() -> Visuals {
         warn_fg_color: Color32::from_rgb(255, 143, 0), // orange
         error_fg_color: Color32::from_rgb(255, 0, 0),  // red
 
-        window_rounding: Rounding::same(6.0),
+        window_corner_radius: CornerRadius::same(6),
         window_shadow: Shadow {
-            offset: vec2(10.0, 20.0),
-            blur: 15.0,
-            spread: 0.0,
+            offset: [10, 20],
+            blur: 15,
+            spread: 0,
             color: Color32::from_black_alpha(96),
         },
         window_fill: Color32::from_rgb(23, 18, 25),
         window_stroke: Stroke::new(1.0, Color32::from_gray(60)),
         window_highlight_topmost: true,
 
-        menu_rounding: Rounding::same(6.0),
+        menu_corner_radius: CornerRadius::same(6),
 
         panel_fill: Color32::from_rgb(23, 18, 25),
 
         popup_shadow: Shadow {
-            offset: vec2(10.0, 20.0),
-            blur: 15.0,
-            spread: 0.0,
+            offset: [6, 10],
+            blur: 8,
+            spread: 0,
             color: Color32::from_black_alpha(96),
         },
         resize_corner_size: 12.0,
@@ -80,9 +80,9 @@ pub fn light_mode_override() -> Visuals {
         error_fg_color: Color32::from_rgb(255, 0, 0),  // red
 
         window_shadow: Shadow {
-            offset: vec2(10.0, 20.0),
-            blur: 15.0,
-            spread: 0.0,
+            offset: [10, 20],
+            blur: 15,
+            spread: 0,
             color: Color32::from_black_alpha(25),
         },
         window_fill: Color32::from_gray(255),
@@ -91,9 +91,9 @@ pub fn light_mode_override() -> Visuals {
         panel_fill: Color32::from_gray(255),
 
         popup_shadow: Shadow {
-            offset: vec2(6.0, 10.0),
-            blur: 8.0,
-            spread: 0.0,
+            offset: [6, 10],
+            blur: 8,
+            spread: 0,
             color: Color32::from_black_alpha(25),
         },
         text_cursor: TextCursorStyle {
